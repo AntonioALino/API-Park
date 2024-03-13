@@ -1,0 +1,20 @@
+@PostConstruct = faz com que o método que receba essa anotação seja iniciado logo após a aplicação ser iniciada.
+@Entity = Defini que aquela classe é uma entidade.
+@Table = Serve para identificar a tabela la na db.
+@Id = Identifica que aquela propriedade é um ID.
+@GeneratedValue = Defini o valor que será gerado para aquele ID, você deve passar a propriedade statregy = GenerationType.(tipo de propriedade de que você quer)
+@Column = Defini qual coluna o Hibernate criará para aquela determinada propriedade. Podemos passar propriedade como nullable, unique e lenght. Precisamos colocar a propriedade name para definir o nome.
+@Enumerated = Usamos para salvar uma constante como string ou como valor. Precisamos passar a propriedade (EnumType.STRING/VALUE)
+@Data = Gera os getters, setters, construtores com argumentos, ToString, EqualsAndHashCode e value
+@Getter = gera os getters.
+@Setter = gera os setters
+@NoArgsConstructor = gera os construtores sem argumentos.
+@ToString = gera um ToString.
+@Service = Transforma a classe em um bean gerenciado pelo Spring
+@RequiredArgsConstructor = Lombok cria um método construtor com a varíavel repository como parte do método construtor assim o Spring faz a injeção de dependência através do construtor
+@RestController = Faz com que o Spring entenda que essa classe é um bean gerenciado por ele e um bean do tipo cntroller para uso do tipo Rest.
+@RequestMapping = Usado para configurar o pathing de acesso a esse recurso, no caso o controller.
+ResponseEntity = Encapsula a resposta.
+@RequestBody = Faz com que você exija um pedido para o body da sua API.
+@Transactional = Spring cuida dos recursos para abrir, gerenciar e cuidar da transação do método save.
+@PostMapping = Indica que aquele tipo de requisição deve ser do tipo Post.
