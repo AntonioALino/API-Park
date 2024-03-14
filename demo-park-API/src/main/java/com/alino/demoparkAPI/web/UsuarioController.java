@@ -1,5 +1,6 @@
 package com.alino.demoparkAPI.web;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import com.alino.demoparkAPI.service.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,10 +34,22 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
+    @GetMapping
+    public ResponseEntity <List<Usuario>> getAll(){
+       List<Usuario>  user = usuarioService.enctTD();
+        return ResponseEntity.ok(user);
+    }
+
     @GetMapping("/{UUID}")
     public ResponseEntity<Usuario> getUsuarioByID(@PathVariable UUID UUID){
         Usuario user = usuarioService.enctId(UUID);
         return ResponseEntity.status(HttpStatus.FOUND).body(user);
     }
 
+
+    @PatchMapping("/{UUID}")
+    public ResponseEntity<Usuario> changePassword(@PathVariable UUID UUID, @RequestBody Usuario usuario){
+        Usuario user = usuarioService.altSenha(UUID, usuario.getSenha());
+        return ResponseEntity.ok(usuario);
+    }
 }
