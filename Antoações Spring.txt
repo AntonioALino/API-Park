@@ -18,3 +18,7 @@ ResponseEntity = Encapsula a resposta.
 @RequestBody = Faz com que você exija um pedido para o body da sua API.
 @Transactional = Spring cuida dos recursos para abrir, gerenciar e cuidar da transação do método save.
 @PostMapping = Indica que aquele tipo de requisição deve ser do tipo Post.
+@GetMapping = Indica que aquele tipo de requisição deve ser do tipo Get.
+@PatchMapping = Indica que aquele tipo de requisição deve ser do tipo Patch.
+@PutMapping = Indica que aquele tipo de requisição deve ser do tipo Put.
+@DeleteMapping = Indica que aquele tipo de requisição deve ser do tipo Delete.

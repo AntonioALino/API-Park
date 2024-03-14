@@ -3,10 +3,8 @@ package com.alino.demoparkAPI.service;
 import java.util.UUID;
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.alino.demoparkAPI.entity.Usuario;
 import com.alino.demoparkAPI.repository.UsuarioRepository;

@@ -30,7 +30,7 @@ public class Usuario implements Serializable{
     
     @Enumerated(EnumType.STRING)
     @Column(name = "cargo", nullable = false, length = 25)
-    private Cargo cargo;
+    private Cargo cargo = Cargo.USUARIO;
 
     @Column(name = "data_criacao")
     private LocalDateTime dataCriacao;
