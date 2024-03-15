@@ -17,6 +17,7 @@ import com.alino.demoparkAPI.web.DTO.UsuarioResponseDTO;
 import com.alino.demoparkAPI.web.DTO.UsuarioSenhaDTO;
 import com.alino.demoparkAPI.web.DTO.mapper.UsuarioMapper;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -32,7 +33,7 @@ public class UsuarioController {
 
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> createUsuario(@RequestBody UsuarioCreateDTO createDTO){
+    public ResponseEntity<UsuarioResponseDTO> createUsuario(@Valid @RequestBody UsuarioCreateDTO createDTO){
        Usuario user =  usuarioService.salvar(UsuarioMapper.toUsuario(createDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDTO(user));
     }
@@ -51,7 +52,7 @@ public class UsuarioController {
 
 
     @PatchMapping("/{UUID}")
-    public ResponseEntity<Void> changePassword(@PathVariable UUID UUID, @RequestBody UsuarioSenhaDTO dto){
+    public ResponseEntity<Void> changePassword(@PathVariable UUID UUID, @Valid @RequestBody UsuarioSenhaDTO dto){
         Usuario user = usuarioService.altSenha(UUID, dto.getSenhaAtual(), dto.getSenhaNova(), dto.getConfirmarSenha());
         return ResponseEntity.noContent().build();
     }
