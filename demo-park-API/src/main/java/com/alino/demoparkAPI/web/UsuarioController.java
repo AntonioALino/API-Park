@@ -14,6 +14,7 @@ import com.alino.demoparkAPI.entity.Usuario;
 import com.alino.demoparkAPI.service.UsuarioService;
 import com.alino.demoparkAPI.web.DTO.UsuarioCreateDTO;
 import com.alino.demoparkAPI.web.DTO.UsuarioResponseDTO;
+import com.alino.demoparkAPI.web.DTO.UsuarioSenhaDTO;
 import com.alino.demoparkAPI.web.DTO.mapper.UsuarioMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -37,9 +38,9 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity <List<Usuario>> getAll(){
+    public ResponseEntity <List<UsuarioResponseDTO>> getAll(){
        List<Usuario>  user = usuarioService.enctTD();
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(UsuarioMapper.toListDTO(user));
     }
 
     @GetMapping("/{UUID}")
@@ -50,8 +51,8 @@ public class UsuarioController {
 
 
     @PatchMapping("/{UUID}")
-    public ResponseEntity<Usuario> changePassword(@PathVariable UUID UUID, @RequestBody Usuario usuario){
-        Usuario user = usuarioService.altSenha(UUID, usuario.getSenha());
-        return ResponseEntity.ok(user);
+    public ResponseEntity<Void> changePassword(@PathVariable UUID UUID, @RequestBody UsuarioSenhaDTO dto){
+        Usuario user = usuarioService.altSenha(UUID, dto.getSenhaAtual(), dto.getSenhaNova(), dto.getConfirmarSenha());
+        return ResponseEntity.noContent().build();
     }
 }

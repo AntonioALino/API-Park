@@ -33,9 +33,19 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario altSenha(UUID uuid, String senha) {
+    public Usuario altSenha(UUID uuid, String senhaAtual, String senhaNova, String confirmarSenha) {
+
+        if (!senhaNova.equals(confirmarSenha)) {
+            throw new RuntimeException("A nova senha não confere com a confirmação de senha.");
+        }
+
         Usuario user = enctId(uuid);
-        user.setSenha(senha);
+
+        if (!user.getSenha().equals(senhaAtual)) {
+            throw new RuntimeException("Senha incorreta.");
+        }
+
+        user.setSenha(senhaNova);
         return user;
     }
 

@@ -1,39 +1,51 @@
 package com.alino.demoparkAPI.web.DTO.mapper;
 
-import java.util.Optional;
+import javax.print.attribute.standard.Destination;
 
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import org.hibernate.id.uuid.UuidGenerator;
+import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.PropertyMapper.Source;
 import org.springframework.stereotype.Service;
 
 import com.alino.demoparkAPI.entity.Usuario;
 import com.alino.demoparkAPI.web.DTO.UsuarioCreateDTO;
 import com.alino.demoparkAPI.web.DTO.UsuarioResponseDTO;
 
-
 @Service
 public class UsuarioMapper {
 
     @Autowired
-    public static Usuario toUsuario(UsuarioCreateDTO usuarioCreateDTO){
+    public static Usuario toUsuario(UsuarioCreateDTO usuarioCreateDTO) {
         new BeanMapper();
         return BeanMapper.mapper().map(usuarioCreateDTO, Usuario.class);
     }
 
     @Autowired
-    public static UsuarioResponseDTO toDTO(Usuario usuario){
+    public static UsuarioResponseDTO toDTO(Usuario usuario) {
         String cargo = usuario.getCargo().name();
-        PropertyMap<Usuario, UsuarioResponseDTO> props = new PropertyMap<Usuario,UsuarioResponseDTO>() {
+        PropertyMap<Usuario, UsuarioResponseDTO> props = new PropertyMap<Usuario, UsuarioResponseDTO>() {
             @Override
-            protected void configure(){
+            protected void configure() {
                 map().setCargo(cargo);
             };
-            
+
         };
-        TypeMap<Usuario, UsuarioResponseDTO> typeMap = BeanMapper.mapper().createTypeMap(Usuario.class, UsuarioResponseDTO.class);
-        typeMap.addMappings(props);
+
+        TypeMap<UsuarioResponseDTO, Usuario> typeMap = BeanMapper.mapper().createTypeMap(UsuarioResponseDTO.class,
+                Usuario.class);
+        typeMap.addMapping(UsuarioResponseDTO::getCargo, Usuario::setCargo);
         new BeanMapper();
         return BeanMapper.mapper().map(usuario, UsuarioResponseDTO.class);
+    }
+
+    public static List<UsuarioResponseDTO> toListDTO(List<Usuario> usuarios){
+        return usuarios.stream().map(user -> toDTO(user)).collect(Collectors.toList());
     }
 }
