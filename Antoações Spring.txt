@@ -27,3 +27,4 @@ ResponseEntity = Encapsula a resposta.
 @NotBlank = Valida se não esta nulo, vazio e verifica se possui pelo menos um caracter (Mais completa).
 @NotEmpty = Valida se o campo não esta nulo e não está vazio.
 @Valid = Avisa o controller que aquele endpoint deve ser validado
+@ExceptionHandler = Essa é a anotação onde vamos registrar a exceção que queremos que a nossa classe capture.

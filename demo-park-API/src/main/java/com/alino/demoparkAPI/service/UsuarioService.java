@@ -8,8 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alino.demoparkAPI.entity.Usuario;
 import com.alino.demoparkAPI.repository.UsuarioRepository;
+import com.alino.demoparkAPI.web.exception.EntityNotFoundException;
+import com.alino.demoparkAPI.web.exception.PasswordInvalidException;
+import com.alino.demoparkAPI.web.exception.UsernameUniqueViolationException;
 
 import lombok.RequiredArgsConstructor;
+
 
 @Service
 @RequiredArgsConstructor
@@ -19,30 +23,35 @@ public class UsuarioService {
 
     @org.springframework.transaction.annotation.Transactional
     public Usuario salvar(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+        try {
+            return usuarioRepository.save(usuario);
+        } catch (org.springframework.dao.DataIntegrityViolationException ex) {
+            throw new UsernameUniqueViolationException(String.format("Usuário {%s} já cadastrado.", usuario.getUsuario(), null));
+        }
+
     }
 
     @Transactional(readOnly = true)
-    public List<Usuario> enctTD(){
+    public List<Usuario> enctTD() {
         return usuarioRepository.findAll();
     }
 
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public Usuario enctId(UUID uuid) {
-        return usuarioRepository.findById(uuid).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        return usuarioRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException(String.format("Usuário  de ID %s não encontrado", uuid)));
     }
 
     @Transactional
     public Usuario altSenha(UUID uuid, String senhaAtual, String senhaNova, String confirmarSenha) {
 
         if (!senhaNova.equals(confirmarSenha)) {
-            throw new RuntimeException("A nova senha não confere com a confirmação de senha.");
+            throw new PasswordInvalidException("A nova senha não confere com a confirmação de senha.");
         }
 
         Usuario user = enctId(uuid);
 
         if (!user.getSenha().equals(senhaAtual)) {
-            throw new RuntimeException("Senha incorreta.");
+            throw new PasswordInvalidException("Senha incorreta.");
         }
 
         user.setSenha(senhaNova);
