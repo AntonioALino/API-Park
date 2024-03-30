@@ -1,17 +1,12 @@
 package com.alino.demoparkAPI.web.DTO.mapper;
 
-import javax.print.attribute.standard.Destination;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import org.hibernate.id.uuid.UuidGenerator;
-import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.PropertyMapper.Source;
 import org.springframework.stereotype.Service;
 
 import com.alino.demoparkAPI.entity.Usuario;
