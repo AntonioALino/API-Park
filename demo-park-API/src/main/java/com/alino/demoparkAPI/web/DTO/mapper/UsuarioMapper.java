@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alino.demoparkAPI.entity.Usuario;
+import com.alino.demoparkAPI.web.DTO.UsuarioJWTDTO;
 import com.alino.demoparkAPI.web.DTO.UsuarioCreateDTO;
 import com.alino.demoparkAPI.web.DTO.UsuarioResponseDTO;
 
@@ -22,6 +23,12 @@ public class UsuarioMapper {
         return BeanMapper.mapper().map(usuarioCreateDTO, Usuario.class);
     }
 
+    @Autowired
+    public static Usuario toJWTDTO(UsuarioJWTDTO usarioJWTDTO){
+        new BeanMapper();
+        return BeanMapper.mapper().map(usarioJWTDTO, Usuario.class);
+    }
+    
     @Autowired
     public static UsuarioResponseDTO toDTO(Usuario usuario) {
         String cargo = usuario.getCargo().name();

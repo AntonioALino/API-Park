@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alino.demoparkAPI.entity.Cargo;
 import com.alino.demoparkAPI.entity.Usuario;
 import com.alino.demoparkAPI.repository.UsuarioRepository;
 import com.alino.demoparkAPI.web.exception.EntityNotFoundException;
@@ -56,6 +57,19 @@ public class UsuarioService {
 
         user.setSenha(senhaNova);
         return user;
+    }
+
+    @Transactional(readOnly = true)
+    public Usuario enctUsuario(String usuario) {
+        return usuarioRepository.findByUsername(usuario).orElseThrow(() -> new EntityNotFoundException(String.format("Usuario não encontrado %s", usuario)));
+
+    }
+
+    @Transactional(readOnly = true)
+    public Cargo buscarCargoPorUsername(String usuario) {
+
+        return usuarioRepository.findByUsername();
+
     }
 
 }

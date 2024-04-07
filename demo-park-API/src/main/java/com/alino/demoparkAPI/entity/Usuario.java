@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "usuarios")
 public class Usuario implements Serializable{
 
@@ -43,6 +46,8 @@ public class Usuario implements Serializable{
 
     @Column(name = "modificado_por")
     private String modificadoPor;
+
+    
 
     @Override
     public boolean equals(Object o) {
